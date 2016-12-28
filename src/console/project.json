@@ -1,27 +1,30 @@
 ﻿{
-  "version": "0.1.0-*",
+  "version": "2.2.0-*",
   "buildOptions": {
     "emitEntryPoint": true
   },
   "runtimes": {
-    "win7-x64": {} 
+    "win7-x64": {},
+    "ubuntu.16.04-x64": {}
   },
   "dependencies": {
     "NETStandard.Library": "1.6.0",
-    "Python.Runtime": "0.1.0-*"
+    "Python.Runtime": "2.2.0-*"
   },
   "frameworks": {
-    //"netstandard1.6": {
-    //  "imports": "dnxcore50"
-    //},
+    "netcoreapp1.1": {
+      "imports": "dnxcore50",
+      "dependencies": {
+        "System.Runtime.Loader": "4.0.0"
+      }
+    },
     "net46": {
-
     }
   },
   "configurations": {
     "Py35-UCS2-Win-Debug": {
       "buildOptions": {
-        "define": [ "TRACE", "DEBUG"]
+        "define": [ "TRACE", "DEBUG" ]
       }
     }
   }
