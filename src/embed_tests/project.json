@@ -19,12 +19,5 @@
     },
     "net46": {
     }
-  },
-  "configurations": {
-    "Py35-UCS2-Win-Debug": {
-      "buildOptions": {
-        "define": [ "TRACE", "DEBUG", "UCS2", "PYTHON35" ]
-      }
-    }
   }
 }

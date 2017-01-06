@@ -2,6 +2,7 @@
   "version": "2.2.0-*",
 
   "buildOptions": {
+    "define": [ "TRACE", "DEBUG", "UCS2", "PYTHON35" ],
     "compile": {
       "exclude": [
         "interop33.cs"
@@ -15,7 +16,6 @@
   "dependencies": {
     "NETStandard.Library": "1.6.0",
     "ReflectionBridge": "0.0.11",
-    "Python.Runtime.Contracts": "2.2.0-*",
     "System.Collections.NonGeneric": "4.0.1",
     "System.Data.Common": "4.1.0",
     "System.Threading.Thread": "4.0.0",
@@ -33,13 +33,6 @@
       }
     },
     "net46": {
-    }
-  },
-  "configurations": {
-    "Py35-UCS2-Win-Debug": {
-      "buildOptions": {
-        "define": [ "TRACE", "DEBUG", "UCS2", "PYTHON35" ]
-      }
     }
   }
 }
