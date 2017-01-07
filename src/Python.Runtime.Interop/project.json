@@ -1,8 +1,8 @@
 {
   "version": "2.2.0-*",
   "buildOptions": {
-    
-    "define": [ "TRACE", "DEBUG", "UCS2", "PYTHON35"]
+    "define": [ "TRACE", "DEBUG", "UCS2", "PYTHON35" ],
+    "allowUnsafe": true
   },
   "dependencies": {
     "NETStandard.Library": "1.6.0",
