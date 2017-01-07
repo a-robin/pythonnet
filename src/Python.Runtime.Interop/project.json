@@ -1,6 +1,9 @@
 {
   "version": "2.2.0-*",
-
+  "buildOptions": {
+    
+    "define": [ "TRACE", "DEBUG", "UCS2", "PYTHON35"]
+  },
   "dependencies": {
     "NETStandard.Library": "1.6.0",
     "JetBrains.Annotations": "10.1.4",
