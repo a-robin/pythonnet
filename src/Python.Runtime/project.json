@@ -2,12 +2,6 @@
   "version": "2.2.0-*",
 
   "buildOptions": {
-    "define": [ "TRACE", "DEBUG", "UCS2", "PYTHON35"],
-    "compile": {
-      "exclude": [
-        "interop33.cs"
-      ]
-    },
     "allowUnsafe": true,
     "embed": {
       "include": [ "**/*.resx", "resources/**/*" ]
