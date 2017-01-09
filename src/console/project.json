@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "NETStandard.Library": "1.6.0",
-    "Python.Runtime": "2.2.0-*"
+    "Python.Runtime": "2.2.0-*",
+    "Python.Runtime.Interop": "2.2.0-*"
   },
   "frameworks": {
     "netcoreapp1.1": {

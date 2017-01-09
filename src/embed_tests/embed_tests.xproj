@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>9f91a9dc-d7b3-45a9-96ff-57aacc1b959a</ProjectGuid>
+    <ProjectGuid>415cd96e-a2f1-4c52-a6fd-9e9ddb528aa5</ProjectGuid>
     <RootNamespace>Python.EmbeddingTest</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>

@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>c41b9f67-571d-4852-b7c4-b54e84dcbcdc</ProjectGuid>
+    <ProjectGuid>abed2cff-ca66-4bd3-a359-d72bb81e1f0e</ProjectGuid>
     <RootNamespace>Python.Runtime</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
