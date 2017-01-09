@@ -25,6 +25,7 @@ namespace Python.EmbeddingTest
         ///             one.py
         /// </remarks>
         [Test]
+        [Ignore("This test does not work in CI environment due to path issue")]
         public void TestDottedName()
         {
             using (PythonWrapper.GIL())
