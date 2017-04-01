@@ -1,5 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
+  </PropertyGroup>
 
+  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Core'">
+    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <TargetFrameworks>net40;netstandard1.5</TargetFrameworks>
     <RootNamespace>Python.Runtime</RootNamespace>
@@ -46,7 +54,14 @@
     <PlatformTarget>x64</PlatformTarget>
     <DefineConstants>TRACE;DEBUG;X64;UCS2;</DefineConstants>
   </PropertyGroup>
-  
+
+  <PropertyGroup Condition="('$(Configuration)'=='Debug' or '$(Configuration)'=='Release') and '$(IsLinux)'=='true'">
+    <DefineConstants>$(DefineConstants);LINUX;UNIX;UCS4;PYTHON_WITH_PYMALLOC;MONO_LINUX</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="('$(Configuration)'=='Debug' or '$(Configuration)'=='Release') and '$(IsWindows)'=='true'">
+    <DefineConstants>$(DefineConstants);UCS2</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);XPLAT;REFLECTIONBRIDGE;PYTHON3;PYTHON35</DefineConstants>
   </PropertyGroup>
@@ -55,7 +70,7 @@
     <!--MS bug, publish makes no sense to configuration name.-->
     <OutputPath>bin\Debug</OutputPath>
   </PropertyGroup>
-  
+
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.5'">
     <PackageReference Include="System.AppDomain">
       <Version>2.0.11</Version>
