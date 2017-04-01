@@ -9,11 +9,6 @@ namespace Python.EmbeddingTest
     {
         public static int Main(string[] args)
         {
-            ////var example = new TestExample();
-            ////example.SetUp();
-            ////example.TestReadme();
-            ////example.Dispose();
-            ////return 0;
             return new AutoRun(typeof(Program).GetTypeInfo().Assembly)
                 .Execute(args, new ExtendedTextWrapper(Console.Out), Console.In);
         }
