@@ -7,9 +7,16 @@
     <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
     <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
-  
-  <PropertyGroup>
+
+  <!--Fix for the bug https://github.com/dotnet/sdk/issues/826-->
+  <PropertyGroup Condition="'IsWindows'=='true'">
     <TargetFrameworks>net40;netstandard1.5</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'IsWindows'!='true'">
+    <TargetFrameworks>netstandard1.5</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <RootNamespace>Python.Runtime</RootNamespace>
     <AssemblyName>Python.Runtime</AssemblyName>
     <PackageId>Python.Runtime</PackageId>
