@@ -3,11 +3,6 @@
     <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(MSBuildRuntimeType)' == 'Core'">
-    <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
-    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
-  </PropertyGroup>
-
   <!--Fix for the bug https://github.com/dotnet/sdk/issues/826-->
   <PropertyGroup Condition="'IsWindows'=='true'">
     <TargetFrameworks>net40;netstandard1.5</TargetFrameworks>
@@ -28,48 +23,8 @@
     <!--<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>-->
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <NoWarn>1701;1702;1705;3021;618</NoWarn>
+    <DefineConstants>$(DefineConstants);XPLAT;REFLECTIONBRIDGE;$(PYTHONNET_BUILD_FLAGS)</DefineConstants>
  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug-Linux-x64|net40|x64'">
-    <DefineConstants>TRACE;DEBUG;X64;LINUX;UNIX;UCS4;PYTHON_WITH_PYMALLOC;MONO_LINUX</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug-Linux-x64|netstandard1.5|x64'">
-    <DefineConstants>TRACE;DEBUG;X64;LINUX;UNIX;UCS4;PYTHON_WITH_PYMALLOC;MONO_LINUX</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release-Linux-x64|net40|x64'">
-    <DefineConstants>TRACE;DEBUG;X64;LINUX;UNIX;UCS4;PYTHON_WITH_PYMALLOC;MONO_LINUX</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release-Linux-x64|netstandard1.5|x64'">
-    <DefineConstants>TRACE;DEBUG;X64;LINUX;UNIX;UCS4;PYTHON_WITH_PYMALLOC;MONO_LINUX</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug-Win-x64|net40|x64'">
-    <DefineConstants>TRACE;DEBUG;X64;UCS2</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug-Win-x64|netstandard1.5|x64'">
-    <DefineConstants>TRACE;DEBUG;X64;UCS2</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release-Win-x64|net40|x64'">
-    <DefineConstants>TRACE;X64;UCS2</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release-Win-x64|netstandard1.5|x64'">
-    <DefineConstants>TRACE;DEBUG;X64;UCS2;</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="('$(Configuration)'=='Debug' or '$(Configuration)'=='Release') and '$(IsLinux)'=='true'">
-    <DefineConstants>$(DefineConstants);LINUX;UNIX;UCS4;PYTHON_WITH_PYMALLOC;MONO_LINUX</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="('$(Configuration)'=='Debug' or '$(Configuration)'=='Release') and '$(IsWindows)'=='true'">
-    <DefineConstants>$(DefineConstants);UCS2</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <DefineConstants>$(DefineConstants);XPLAT;REFLECTIONBRIDGE;PYTHON3;PYTHON35</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration.Substring(0,5))'=='Debug'">
-    <!--MS bug, publish makes no sense to configuration name.-->
-    <OutputPath>bin\Debug</OutputPath>
-  </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.5'">
     <PackageReference Include="System.AppDomain">
