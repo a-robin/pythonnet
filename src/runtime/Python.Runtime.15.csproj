@@ -23,8 +23,16 @@
     <!--<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>-->
     <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
     <NoWarn>1701;1702;1705;3021;618</NoWarn>
+    <DefineConstantsOriginal>$(DefineConstants);XPLAT;REFLECTIONBRIDGE;$(PYTHONNET_BUILD_FLAGS)</DefineConstantsOriginal>
     <DefineConstants>$(DefineConstants);XPLAT;REFLECTIONBRIDGE;$(PYTHONNET_BUILD_FLAGS)</DefineConstants>
  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug-Linux-UCS4-Py35-Malloc|net40|x64'">
+    <DefineConstants>$(DefineConstantsOriginal);XPLAT;REFLECTIONBRIDGE;LINUX;UNIX;UCS4;PYTHON_WITH_PYMALLOC;MONO_LINUX;PYTHON3;PYTHON35</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug-Linux-UCS4-Py35-Malloc|netstandard1.5|x64'">
+    <DefineConstants>$(DefineConstantsOriginal);XPLAT;REFLECTIONBRIDGE;LINUX;UNIX;UCS4;PYTHON_WITH_PYMALLOC;MONO_LINUX;PYTHON3;PYTHON35</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.5'">
     <PackageReference Include="System.AppDomain">
