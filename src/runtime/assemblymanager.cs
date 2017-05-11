@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using System.Diagnostics;
+
 #if NETSTANDARD1_5
 using System.Runtime.Loader;
 #endif
@@ -199,6 +201,8 @@ namespace Python.Runtime
         /// Loads an assembly from the application directory or the GAC
         /// given a simple assembly name. Returns the assembly if loaded.
         /// </summary>
+        [DebuggerHidden]
+        [DebuggerNonUserCode]
         public static Assembly LoadAssembly(string name)
         {
             Assembly assembly = null;
