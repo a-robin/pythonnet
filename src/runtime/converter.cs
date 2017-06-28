@@ -321,6 +321,18 @@ namespace Python.Runtime
                 return true;
             }
 
+#if NETSTANDARD1_5
+            if (obType.IsGenericType() && obType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                if( value == Runtime.PyNone )
+                {
+                    result = null;
+                    return true;
+                }
+                // Set type to underlying type
+                obType = obType.GetTypeInfo().GetGenericArguments()[0];
+            }
+#else
             if (obType.IsGenericType && obType.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 if( value == Runtime.PyNone )
@@ -331,7 +343,7 @@ namespace Python.Runtime
                 // Set type to underlying type
                 obType = obType.GetGenericArguments()[0];
             }
-
+#endif
             if (obType.IsArray)
             {
                 return ToArray(value, obType, out result, setError);

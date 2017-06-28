@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Dynamic;
+using ReflectionBridge.Extensions;
 
 namespace Python.Runtime
 {
+
     public class PyScopeException : Exception
     {
         public PyScopeException(string message)
@@ -480,7 +482,7 @@ namespace Python.Runtime
             }
             if (pyObj == null)
             {
-                if (typeof(T).IsValueType)
+                if (typeof(T).IsValueType())
                 {
                     throw new PyScopeException($"The value of the attribute '{name}' is None which cannot be convert to '{typeof(T).ToString()}'");
                 }

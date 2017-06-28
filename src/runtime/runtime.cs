@@ -6,6 +6,7 @@ using ReflectionBridge.Extensions;
 
 namespace Python.Runtime
 {
+
 #if !NETSTANDARD1_5
     [SuppressUnmanagedCodeSecurity]
 #endif
@@ -179,8 +180,11 @@ namespace Python.Runtime
 
         internal static bool Is32Bit = IntPtr.Size == 4;
 
-        // .NET core: System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+#if NETSTANDARD1_5
+        internal static bool IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+#else
         internal static bool IsWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
+#endif
 
         internal static bool IsPython2 = pyversionnumber < 30;
         internal static bool IsPython3 = pyversionnumber >= 30;
@@ -308,7 +312,7 @@ namespace Python.Runtime
             if (_PythonDll != "__Internal")
             {
 #if !NETSTANDARD1_5
-                dllLocal = NativeMethods.LoadLibrary(PythonDll);
+                dllLocal = NativeMethods.LoadLibrary(_PythonDll);
 #endif
             }
 #if !NETSTANDARD1_5
@@ -747,7 +751,7 @@ namespace Python.Runtime
         [DllImport(_PythonDll, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr PyEval_EvalCode(IntPtr co, IntPtr globals, IntPtr locals);
 
-        [DllImport(PythonDll, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(_PythonDll, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr Py_CompileString(string code, string file, IntPtr tok);
 
         [DllImport(_PythonDll, CallingConvention = CallingConvention.Cdecl)]
@@ -817,7 +821,6 @@ namespace Python.Runtime
             return Marshal.PtrToStringAnsi(ppName);
         }
 
-        [DllImport(_PythonDll, CallingConvention = CallingConvention.Cdecl)]
         /// <summary>
         /// Test whether the Python object is an iterable.
         /// </summary>
