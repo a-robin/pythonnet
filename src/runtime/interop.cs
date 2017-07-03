@@ -356,7 +356,6 @@ namespace Python.Runtime
             }
 
             keepAlive = new ArrayList();
-            Marshal.AllocHGlobal(IntPtr.Size);
             pmap = new Hashtable();
 
             pmap["tp_dealloc"] = p["DestructorFunc"];

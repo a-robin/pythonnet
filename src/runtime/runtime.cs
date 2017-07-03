@@ -195,6 +195,12 @@ namespace Python.Runtime
         internal static readonly Encoding PyEncoding = _UCS == 2 ? Encoding.Unicode : Encoding.UTF32;
 
         /// <summary>
+        /// 4Mb of Python strings to .Net strings cache.
+        /// </summary>
+        private static readonly RawMemoryFifoDictionary<string> UcsStringsInternDictionary =
+            new RawMemoryFifoDictionary<string>(10000, 100 * _UCS);
+
+        /// <summary>
         /// Initialize the runtime...
         /// </summary>
         internal static void Initialize()
@@ -1400,7 +1406,7 @@ namespace Python.Runtime
         /// </remarks>
         /// <param name="op">PyStringType or PyUnicodeType object to convert</param>
         /// <returns>Managed String</returns>
-        internal static string GetManagedString(IntPtr op)
+        internal static unsafe string GetManagedString(IntPtr op)
         {
             IntPtr type = PyObject_TYPE(op);
 
@@ -1415,11 +1421,20 @@ namespace Python.Runtime
             {
                 IntPtr p = PyUnicode_AsUnicode(op);
                 int length = PyUnicode_GetSize(op);
+                int size = length * UCS;
+                if (size <= UcsStringsInternDictionary.MaxItemSize)
+                {
+                    var ucsStringMemBlock = new RawImmutableMemBlock(p, size);
+                    if (!UcsStringsInternDictionary.TryGetValue(ucsStringMemBlock, out var str))
+                    {
+                        str = PyEncoding.GetString((byte*)p, size);
+                        UcsStringsInternDictionary.AddUnsafe(ucsStringMemBlock, str);
+                    }
 
-                int size = length * _UCS;
-                var buffer = new byte[size];
-                Marshal.Copy(p, buffer, 0, size);
-                return PyEncoding.GetString(buffer, 0, size);
+                    return str;
+                }
+
+                return PyEncoding.GetString((byte*)p, size);
             }
 
             return null;
