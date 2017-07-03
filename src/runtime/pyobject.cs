@@ -45,7 +45,7 @@ namespace Python.Runtime
 
         ~PyObject()
         {
-            Dispose();
+            Dispose(false);
         }
 
 
@@ -139,11 +139,10 @@ namespace Python.Runtime
             {
                 if (Interlocked.CompareExchange(ref obj, IntPtr.Zero, objCache) == objCache)
                 {
-                    if (Runtime.Py_IsInitialized() > 0 && !Runtime.IsFinalizing)
+                    PythonEngine.ScheduleDecRef(objCache);
+                    if (disposing)
                     {
-                        IntPtr gs = PythonEngine.AcquireLock();
-                        Runtime.XDecref(objCache);
-                        PythonEngine.ReleaseLock(gs);
+                        GC.SuppressFinalize(this);
                     }
                 }
             }
@@ -152,7 +151,6 @@ namespace Python.Runtime
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
 
@@ -934,7 +932,23 @@ namespace Python.Runtime
         /// </remarks>
         public override int GetHashCode()
         {
-            return Runtime.PyObject_Hash(obj).ToInt32();
+            int hashCode = Runtime.PyObject_Hash(obj).ToInt32();
+            if (hashCode == -1)
+            {
+                if (Exceptions.ErrorOccurred())
+                {
+                    // Just creating, and do nothing.
+                    var ex = new PythonException();
+                    ex.Dispose();
+                    // ReSharper disable once NonReadonlyMemberInGetHashCode
+                    unchecked
+                    {
+                        return (int)(long)obj;
+                    }
+                }
+            }
+
+            return hashCode;
         }
 
 

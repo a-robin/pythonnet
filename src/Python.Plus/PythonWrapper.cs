@@ -62,7 +62,7 @@
             // Skipping initialization if already initialized.
             if (Interlocked.CompareExchange(ref _instance, this, null) == this)
             {
-                throw new InvalidOperationException("Python wraper was already initialized.");
+                throw new InvalidOperationException("Python wrapper was already initialized.");
             }
 
             if (logger == null)

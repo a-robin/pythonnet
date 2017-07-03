@@ -7,6 +7,9 @@ using System.Runtime.InteropServices;
 
 namespace Python.Runtime
 {
+    using System.Collections.Concurrent;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// This class provides the public interface of the Python runtime.
     /// </summary>
@@ -17,6 +20,13 @@ namespace Python.Runtime
         private static IntPtr _pythonHome = IntPtr.Zero;
         private static IntPtr _programName = IntPtr.Zero;
         private static IntPtr _pythonPath = IntPtr.Zero;
+
+        private static readonly BlockingCollection<IntPtr> DecRefQueue = new BlockingCollection<IntPtr>();
+
+        static PythonEngine()
+        {
+            Task.Factory.StartNew(DecRefThread, TaskCreationOptions.LongRunning);
+        }
 
         public PythonEngine()
         {
@@ -481,6 +491,15 @@ namespace Python.Runtime
         }
 
         /// <summary>
+        /// Schedules references count decrement operation.
+        /// </summary>
+        /// <param name="pyObj">Python object ptr to decrement references count to.</param>
+        public static void ScheduleDecRef(IntPtr pyObj)
+        {
+            DecRefQueue.Add(pyObj);
+        }
+
+        /// <summary>
         /// Internal RunString Method.
         /// </summary>
         /// <remarks>
@@ -531,6 +550,35 @@ namespace Python.Runtime
                 if (!borrowedGlobals)
                 {
                     Runtime.XDecref(globals.Value);
+                }
+            }
+        }
+
+        private static void DecRefThread()
+        {
+            while (true)
+            {
+                IntPtr pyObj = DecRefQueue.Take();
+                if (Runtime.Py_IsInitialized() > 0 && !Runtime.IsFinalizing)
+                {
+                    IntPtr gs = AcquireLock();
+
+                    // Decrementing references.
+                    try
+                    {
+                        Runtime.XDecref(pyObj);
+                        while (DecRefQueue.TryTake(out pyObj))
+                        {
+                            Runtime.XDecref(pyObj);
+                        }
+                    }
+                    catch
+                    {
+                        // Do nothing.
+                    }
+
+
+                    ReleaseLock(gs);
                 }
             }
         }
