@@ -36,9 +36,9 @@
   
   <ItemGroup>
     <PackageReference Include="NUnit">
-      <Version>3.7.0-dev-03820</Version>
+      <Version>3.7.1</Version>
     </PackageReference>
-    <PackageReference Include="NUnitLite" Version="3.7.0-dev-03820" />
+    <PackageReference Include="NUnitLite" Version="3.7.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="15.0.0" />
   </ItemGroup>
@@ -54,7 +54,7 @@
       <Version>4.0.1</Version>
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter">
-      <Version>4.0.0-alpha1</Version>
+      <Version>3.8.0-alpha1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
