@@ -1,0 +1,36 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26724.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Python.Runtime.15", "src\runtime\Python.Runtime.15.csproj", "{2759F4FF-716B-4828-916F-50FA86613DFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Python.EmbeddingTest.15", "src\embed_tests\Python.EmbeddingTest.15.csproj", "{66B8D01A-9906-452A-B09E-BF75EA76468F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		DebugWinPY3|x64 = DebugWinPY3|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2759F4FF-716B-4828-916F-50FA86613DFC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2759F4FF-716B-4828-916F-50FA86613DFC}.Debug|x64.Build.0 = Debug|Any CPU
+		{2759F4FF-716B-4828-916F-50FA86613DFC}.DebugWinPY3|x64.ActiveCfg = DebugWinPY3|Any CPU
+		{2759F4FF-716B-4828-916F-50FA86613DFC}.DebugWinPY3|x64.Build.0 = DebugWinPY3|Any CPU
+		{2759F4FF-716B-4828-916F-50FA86613DFC}.Release|x64.ActiveCfg = Release|Any CPU
+		{2759F4FF-716B-4828-916F-50FA86613DFC}.Release|x64.Build.0 = Release|Any CPU
+		{66B8D01A-9906-452A-B09E-BF75EA76468F}.Debug|x64.ActiveCfg = Debug|x64
+		{66B8D01A-9906-452A-B09E-BF75EA76468F}.Debug|x64.Build.0 = Debug|x64
+		{66B8D01A-9906-452A-B09E-BF75EA76468F}.DebugWinPY3|x64.ActiveCfg = DebugWinPY3|x64
+		{66B8D01A-9906-452A-B09E-BF75EA76468F}.DebugWinPY3|x64.Build.0 = DebugWinPY3|x64
+		{66B8D01A-9906-452A-B09E-BF75EA76468F}.Release|x64.ActiveCfg = Release|x64
+		{66B8D01A-9906-452A-B09E-BF75EA76468F}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6347B90-BBE6-4E45-90BF-1BD8B76069E3}
+	EndGlobalSection
+EndGlobal

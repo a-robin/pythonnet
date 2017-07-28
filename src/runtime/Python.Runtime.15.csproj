@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40</TargetFrameworks>
+    <RootNamespace>Python.Runtime</RootNamespace>
+    <AssemblyName>Python.Runtime</AssemblyName>
+    <PackageId>Python.Runtime</PackageId>
+    <VersionPrefix>2.4.0</VersionPrefix>
+    <VersionSuffix>Alpha</VersionSuffix>
+
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <NoWarn>1591</NoWarn>
+    <BaseDefineConstants>$(DefineConstants);XPLAT;REFLECTIONBRIDGE</BaseDefineConstants>
+    <DefineConstants>$(BaseDefineConstants);$(PYTHONNET_DEFINE_CONSTANTS)</DefineConstants>
+    <Configurations>Debug;Release;DebugWinPY3</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='DebugWinPY3|net40|AnyCPU'">
+    <DefineConstants>$(BaseDefineConstants);UCS2;PYTHON3;PYTHON36</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="resources\clr.py" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs" Link="SharedAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="resources\clr.py" />
+  </ItemGroup>
+</Project>
