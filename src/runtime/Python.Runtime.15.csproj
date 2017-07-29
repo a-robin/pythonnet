@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40</TargetFrameworks>
+    <TargetFrameworks>net40;netcoreapp2.0</TargetFrameworks>
     <RootNamespace>Python.Runtime</RootNamespace>
     <AssemblyName>Python.Runtime</AssemblyName>
     <PackageId>Python.Runtime</PackageId>
@@ -24,6 +24,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='DebugWinPY3|net40|AnyCPU'">
     <DefineConstants>$(BaseDefineConstants);UCS2;PYTHON3;PYTHON36</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='DebugWinPY3|netcoreapp2.0|AnyCPU'">
+    <DefineConstants>$(BaseDefineConstants);UCS2;PYTHON3;PYTHON36</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
+    <DefineConstants>$(DefineConstants);NETCOREAPP</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Remove="resources\clr.py" />
@@ -35,5 +42,11 @@
 
   <ItemGroup>
     <EmbeddedResource Include="resources\clr.py" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
+    <PackageReference Include="System.Security.Permissions">
+      <Version>4.4.0-preview2-25405-01</Version>
+    </PackageReference>
   </ItemGroup>
 </Project>
