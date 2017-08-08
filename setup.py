@@ -133,6 +133,16 @@ def _get_long_description():
 
 
 class BuildExtPythonnet(build_ext.build_ext):
+    user_options = build_ext.build_ext.user_options + [
+            ('xplat', None, None)
+        ]
+    def initialize_options(self):
+        build_ext.build_ext.initialize_options(self)
+        self.xplat = None
+
+    def finalize_options(self):
+        build_ext.build_ext.finalize_options(self)
+
     def build_extension(self, ext):
         """Builds the .pyd file using msbuild or xbuild"""
         if ext.name != "clr":
@@ -193,7 +203,10 @@ class BuildExtPythonnet(build_ext.build_ext):
             geninterop = os.path.join("tools", "geninterop", "geninterop.py")
             subprocess.check_call([sys.executable, geninterop, interop_file])
 
-        if DEVTOOLS == "MsDev":
+        if self.xplat:
+            _xbuild = "dotnet msbuild"
+            _config = CONFIG;
+        elif DEVTOOLS == "MsDev":
             _xbuild = '"{0}"'.format(self._find_msbuild_tool("msbuild.exe"))
             _config = "{0}Win".format(CONFIG)
 
@@ -206,7 +219,7 @@ class BuildExtPythonnet(build_ext.build_ext):
 
         cmd = [
             _xbuild,
-            'pythonnet.sln',
+            'pythonnet.15.sln' if self.xplat else 'pythonnet.sln',
             '/p:Configuration={}'.format(_config),
             '/p:Platform={}'.format(ARCH),
             '/p:DefineConstants="{}"'.format('%3B'.join(defines)),
@@ -221,6 +234,7 @@ class BuildExtPythonnet(build_ext.build_ext):
 
         self.debug_print("Building: {0}".format(" ".join(cmd)))
         use_shell = True if DEVTOOLS == "Mono" else False
+
         subprocess.check_call(" ".join(cmd + ["/t:Clean"]), shell=use_shell)
         subprocess.check_call(" ".join(cmd + ["/t:Build"]), shell=use_shell)
 
@@ -266,6 +280,12 @@ class BuildExtPythonnet(build_ext.build_ext):
         if DEVTOOLS == "Mono":
             nuget = "mono {0}".format(nuget)
             use_shell = True
+
+        if self.xplat:
+            cmd = "dotnet msbuild /t:Restore pythonnet.15.sln"
+            self.debug_print("Updating packages with xplat: {0}".format(cmd))
+            subprocess.check_call(cmd, shell=use_shell)
+            return;
 
         cmd = "{0} update -self".format(nuget)
         self.debug_print("Updating NuGet: {0}".format(cmd))
