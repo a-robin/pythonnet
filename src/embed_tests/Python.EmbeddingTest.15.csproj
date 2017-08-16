@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
     <RootNamespace>Python.EmbeddingTest</RootNamespace>
     <AssemblyName>Python.EmbeddingTest</AssemblyName>
     <PackageId>Python.EmbeddingTest</PackageId>
@@ -14,12 +14,15 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <BaseDefineConstants>$(DefineConstants);XPLAT;REFLECTIONBRIDGE</BaseDefineConstants>
     <DefineConstants>$(BaseDefineConstants);$(PYTHONNET_DEFINE_CONSTANTS)</DefineConstants>
-    <Configurations>Debug;Release;DebugWinPY3</Configurations>
+    <Configurations>Debug;Release;DebugWinPY3;DebugWinPY2</Configurations>
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='DebugWinPY3|net40|x64'">
     <DefineConstants>$(BaseDefineConstants);UCS2;PYTHON3;PYTHON36</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='DebugWinPY2|net40|x64'">
+    <DefineConstants>$(BaseDefineConstants);UCS2;PYTHON2;PYTHON27</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
     <RootNamespace>Python.Runtime</RootNamespace>
     <AssemblyName>Python.Runtime</AssemblyName>
     <PackageId>Python.Runtime</PackageId>
@@ -18,14 +18,20 @@
     <NoWarn>1591</NoWarn>
     <BaseDefineConstants>$(DefineConstants);XPLAT;REFLECTIONBRIDGE</BaseDefineConstants>
     <DefineConstants>$(BaseDefineConstants);$(PYTHONNET_DEFINE_CONSTANTS)</DefineConstants>
-    <Configurations>Debug;Release;DebugWinPY3</Configurations>
+    <Configurations>Debug;Release;DebugWinPY3;DebugWinPY2</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='DebugWinPY3|net40|AnyCPU'">
     <DefineConstants>$(BaseDefineConstants);UCS2;PYTHON3;PYTHON36</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='DebugWinPY2|net40|AnyCPU'">
+    <DefineConstants>$(BaseDefineConstants);UCS2;PYTHON2;PYTHON27</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='DebugWinPY3|netcoreapp2.0|AnyCPU'">
     <DefineConstants>$(BaseDefineConstants);UCS2;PYTHON3;PYTHON36</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='DebugWinPY2|netcoreapp2.0|AnyCPU'">
+    <DefineConstants>$(BaseDefineConstants);UCS2;PYTHON2;PYTHON27</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0'">
