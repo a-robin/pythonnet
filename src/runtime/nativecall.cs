@@ -57,7 +57,11 @@ namespace Python.Runtime
                 GenerateThunk(tBuilder, method);
             }
 
+#if NETCOREAPP
+            Type theType = tBuilder.CreateTypeInfo().AsType();
+#elif NET40
             Type theType = tBuilder.CreateType();
+#endif 
 
             Impl = (INativeCall)Activator.CreateInstance(theType);
         }

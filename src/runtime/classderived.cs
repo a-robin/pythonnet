@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -249,7 +249,11 @@ namespace Python.Runtime
             il.Emit(OpCodes.Call, baseClass.GetMethod("Finalize", BindingFlags.NonPublic | BindingFlags.Instance));
             il.Emit(OpCodes.Ret);
 
+#if NETCOREAPP
+            Type type = typeBuilder.CreateTypeInfo().AsType();
+#elif NET40
             Type type = typeBuilder.CreateType();
+#endif 
 
             // scan the assembly so the newly added class can be imported
             Assembly assembly = Assembly.GetAssembly(type);

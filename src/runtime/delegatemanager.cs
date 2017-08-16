@@ -142,7 +142,12 @@ namespace Python.Runtime
 
             il.Emit(OpCodes.Ret);
 
+#if NETCOREAPP
+            Type disp = tb.CreateTypeInfo().AsType();
+#elif NET40
             Type disp = tb.CreateType();
+#endif
+
             cache[dtype] = disp;
             return disp;
         }
